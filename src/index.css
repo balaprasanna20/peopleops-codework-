@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background-color: #FAF7EE;
+    color: #26372B;
+  }
+
+  body {
+    background-color: #FAF7EE;
+    color: #26372B;
+  }
+}
+
+/* Editorial Glass & Surface Cards */
+.editorial-card {
+  background: #FFFFFF;
+  border: 1px solid #EBD0AF;
+  box-shadow: 0 4px 20px -2px rgba(42, 124, 19, 0.05);
+}
+
+.editorial-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: #76C457;
+  box-shadow: 0 16px 36px -8px rgba(42, 124, 19, 0.12);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #EBD0AF;
+}
+
+.glass-card-subtle {
+  background: #FFFDF9;
+  border: 1px solid #F5DAC0;
+}
+
+/* Gradients */
+.gradient-forest {
+  background: linear-gradient(135deg, #113309 0%, #2A7C13 50%, #76C457 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pill-sage {
+  background-color: #EAF5E7;
+  color: #20630D;
+  border: 1px solid #D2EBCB;
+}
+
+.pill-butter {
+  background-color: #FFF8CF;
+  color: #2A7C13;
+  border: 1px solid #FBE6C2;
+}
+
+.pill-sand {
+  background-color: #FBE6C2;
+  color: #113309;
+  border: 1px solid #EBD0AF;
+}
+
+/* Clean Editorial Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FBE6C2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C2B19C;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2A7C13;
+}
