@@ -10,7 +10,9 @@ import {
   Cable,
   GitMerge,
   Cpu,
-  LayoutDashboard
+  LayoutDashboard,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 /* ── Hand-drawn curly loop connector arrows matching user sketch ── */
@@ -124,21 +126,52 @@ function VerticalCurlyArrow({ index, activeStep }) {
 }
 
 export default function HomeView({ onBookDemo, onNavigate }) {
-  // Dynamic Tablet Screens (Warped 4K Screens inside Bezel)
+  // Dynamic Hand-Held Tablet Screens (Warped 4K Screens inside Bezel with Hands on Top)
   const tabletScreens = [
-    { id: 'overview', title: 'Overview Dashboard', image: '/assets/hero-tablet-overview.png' },
-    { id: 'kpi', title: 'KPI & Velocity', image: '/assets/hero-tablet-kpi.png' },
-    { id: 'employees', title: 'Employee Directory', image: '/assets/hero-tablet-attendance.png' }
+    { 
+      id: 'overview', 
+      title: 'Overview Dashboard', 
+      tag: 'Executive Cockpit',
+      desc: 'Real-time roadmap, attendance ratio, productivity & workforce health',
+      image: '/assets/hero-tablet-overview.png',
+      rawImage: '/assets/overview-dashboard-new.png'
+    },
+    { 
+      id: 'kpi', 
+      title: 'KPI & Velocity', 
+      tag: 'Engineering & Delivery',
+      desc: 'Team-wise rankings, target completions & sprint delivery metrics',
+      image: '/assets/hero-tablet-kpi.png',
+      rawImage: '/assets/kpi-dashboard-new.png'
+    },
+    { 
+      id: 'employees', 
+      title: 'Employee Directory', 
+      tag: 'People Intelligence',
+      desc: '360° individual profile cards, cross-system activity & sync status',
+      image: '/assets/hero-tablet-attendance.png',
+      rawImage: '/assets/employees-dashboard-new.png'
+    }
   ];
 
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
 
   useEffect(() => {
+    if (isCarouselPaused) return;
     const timer = setInterval(() => {
       setCurrentScreenIndex((prev) => (prev + 1) % tabletScreens.length);
-    }, 4000);
+    }, 4500);
     return () => clearInterval(timer);
-  }, [tabletScreens.length]);
+  }, [isCarouselPaused, tabletScreens.length]);
+
+  const handlePrevScreen = () => {
+    setCurrentScreenIndex((prev) => (prev === 0 ? tabletScreens.length - 1 : prev - 1));
+  };
+
+  const handleNextScreen = () => {
+    setCurrentScreenIndex((prev) => (prev + 1) % tabletScreens.length);
+  };
 
   // Step-by-Step Auto Story Sequence
   const [activeWorkflowStep, setActiveWorkflowStep] = useState(0);
@@ -199,7 +232,7 @@ export default function HomeView({ onBookDemo, onNavigate }) {
             
             {/* Left Column: Exact Headline, Sub-headline & Buttons */}
             <motion.div
-              className="lg:col-span-6 space-y-6 text-left z-20"
+              className="lg:col-span-5 space-y-6 text-left z-20"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -211,7 +244,7 @@ export default function HomeView({ onBookDemo, onNavigate }) {
               </div>
 
               {/* Exact Hero Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-white tracking-tight leading-[1.08]">
+              <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-black text-white tracking-tight leading-[1.08]">
                 See your whole workforce in one place.
               </h1>
 
@@ -244,45 +277,51 @@ export default function HomeView({ onBookDemo, onNavigate }) {
               </div>
             </motion.div>
 
-            {/* Right Column: 4K Tablet Screen Showcase */}
+
+            {/* Right Column: 4K Hand-Held Tablet Screen Showcase (Prominent & Natural) */}
             <motion.div
-              className="lg:col-span-6 flex justify-center items-center relative z-10"
+              className="lg:col-span-7 flex justify-center items-center relative z-10"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.15 }}
             >
-              <div className="relative w-full max-w-[760px] flex flex-col items-center">
-                
-                {/* Crossfading Mockup */}
-                <div className="relative w-full aspect-[16/10] sm:aspect-[16/9.8] select-none">
+              <div 
+                className="relative w-full max-w-[880px] xl:max-w-[950px] flex flex-col items-center"
+                onMouseEnter={() => setIsCarouselPaused(true)}
+                onMouseLeave={() => setIsCarouselPaused(false)}
+              >
+                {/* Ambient Glow */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] bg-emerald-500/15 rounded-full blur-[100px] pointer-events-none" />
+
+                {/* ══ 4K HAND-HELD TABLET CAROUSEL CONTAINER (NATURAL BORDERS, ZERO FULLSCREEN POPUP) ══ */}
+                <div className="relative w-full aspect-[1276/753] select-none group">
+                  {/* Crossfading Hand-held Mockups */}
                   {tabletScreens.map((screen, idx) => (
                     <img
                       key={screen.id}
                       src={screen.image}
                       alt={screen.title}
-                      className={`absolute inset-0 w-full h-full object-contain pointer-events-none transition-opacity duration-700 ease-in-out ${
+                      className={`absolute inset-0 w-full h-full object-contain pointer-events-none transition-opacity duration-700 ease-in-out drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)] ${
                         currentScreenIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
                       }`}
                     />
                   ))}
-                </div>
 
-                {/* Pill Screen Selector */}
-                <div className="flex items-center justify-center gap-2 mt-4 z-20">
-                  {tabletScreens.map((screen, idx) => (
-                    <button
-                      key={screen.id}
-                      onClick={() => setCurrentScreenIndex(idx)}
-                      className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                        currentScreenIndex === idx
-                          ? 'bg-[#00C9A7] text-slate-950 font-bold shadow-md scale-105'
-                          : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
-                      }`}
-                    >
-                      <span className={`w-1.5 h-1.5 rounded-full ${currentScreenIndex === idx ? 'bg-slate-950' : 'bg-emerald-400'}`} />
-                      <span>{screen.title}</span>
-                    </button>
-                  ))}
+                  {/* Left & Right Arrow Navigation Controls */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handlePrevScreen(); }}
+                    className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100 shadow-2xl hover:scale-110"
+                    aria-label="Previous screen"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleNextScreen(); }}
+                    className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100 shadow-2xl hover:scale-110"
+                    aria-label="Next screen"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
                 </div>
 
               </div>
@@ -413,7 +452,6 @@ export default function HomeView({ onBookDemo, onNavigate }) {
           </div>
         </div>
       </section>
-
 
 
 

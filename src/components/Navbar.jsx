@@ -22,8 +22,6 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isDark = activeSection === 'overview' || activeSection === 'home';
-
   const handleNavClick = (id) => {
     setMobileOpen(false);
     if (onNavigate) {
@@ -36,11 +34,9 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0,  opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl border-b ${
-        isDark
-          ? 'bg-[#071F11]/90 border-emerald-950/80 text-white'
-          : 'bg-[#FAF7EE]/95 border-[#EBD0AF] text-[#113309]'
-      } ${scrolled ? 'h-16 shadow-lg' : 'h-20'}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl border-b bg-[#FAF7EE]/95 border-[#EBD0AF] text-black ${
+        scrolled ? 'h-16 shadow-[0_4px_25px_rgba(0,0,0,0.08)]' : 'h-20'
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-6">
 
@@ -60,7 +56,7 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
         </motion.div>
 
         {/* ── CENTER NAV (Desktop) ── */}
-        <nav className="hidden md:flex items-center gap-1 mx-auto" onMouseLeave={() => setHovered(null)}>
+        <nav className="hidden md:flex items-center gap-1.5 mx-auto" onMouseLeave={() => setHovered(null)}>
           {NAV_LINKS.map((link) => {
             const isActive = activeSection === link.id;
             return (
@@ -68,12 +64,9 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
                 onMouseEnter={() => setHovered(link.id)}
-                className="relative px-4 py-2.5 rounded-lg text-sm font-semibold tracking-tight transition-colors duration-150 outline-none"
-                style={{
-                  color: isActive
-                    ? (isDark ? '#fff' : '#113309')
-                    : (isDark ? 'rgba(209,250,229,0.7)' : '#3E5044'),
-                }}
+                className={`relative px-4 py-2 rounded-lg text-sm font-bold tracking-tight transition-colors duration-150 outline-none ${
+                  isActive ? 'text-black font-extrabold' : 'text-black/75 hover:text-black'
+                }`}
                 whileHover={{ y: -1 }}
                 whileTap={{ y: 0, scale: 0.97 }}
                 transition={{ type: 'spring', stiffness: 500, damping: 25 }}
@@ -85,12 +78,8 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
                       layoutId="nav-pill"
                       className={`absolute inset-0 rounded-lg ${
                         isActive
-                          ? isDark
-                            ? 'bg-white/15 border border-white/20'
-                            : 'bg-[#FBE6C2] border border-[#EBD0AF]'
-                          : isDark
-                            ? 'bg-white/8'
-                            : 'bg-[#FBE6C2]/60'
+                          ? 'bg-[#EBD0AF] border border-[#DFC39F] shadow-sm'
+                          : 'bg-[#FBE6C2]/60'
                       }`}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -104,12 +93,12 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
                 {isActive && (
                   <motion.span
                     layoutId="nav-dot"
-                    className={`absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full ${isDark ? 'bg-[#00C9A7]' : 'bg-[#2A7C13]'}`}
+                    className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-black"
                     transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                   />
                 )}
 
-                <span className="relative z-10">{link.label}</span>
+                <span className="relative z-10 text-black">{link.label}</span>
               </motion.button>
             );
           })}
@@ -118,35 +107,27 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
         {/* ── CTA (Desktop) ── */}
         <motion.button
           onClick={onBookDemo}
-          className={`hidden md:flex flex-shrink-0 items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-extrabold tracking-tight shadow-lg ${
-            isDark
-              ? 'bg-[#F59E0B] text-slate-950 shadow-amber-500/20'
-              : 'bg-[#2A7C13] text-[#FFFDF9] shadow-[0_4px_20px_rgba(42,124,19,0.25)]'
-          }`}
+          className="hidden md:flex flex-shrink-0 items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-black tracking-tight shadow-md bg-[#F59E0B] text-black shadow-amber-500/20 border border-amber-600/30"
           whileHover={{
             scale: 1.05,
-            boxShadow: isDark
-              ? '0 8px 30px rgba(245,158,11,0.4)'
-              : '0 8px 30px rgba(42,124,19,0.45)',
+            boxShadow: '0 8px 30px rgba(245,158,11,0.35)',
           }}
           whileTap={{ scale: 0.97 }}
           transition={{ type: 'spring', stiffness: 400, damping: 20 }}
         >
-          <span>Book a Demo</span>
+          <span className="text-black font-black">Book a Demo</span>
           <motion.span
             animate={{ x: [0, 3, 0] }}
             transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
           >
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 text-black stroke-[2.5]" />
           </motion.span>
         </motion.button>
 
         {/* ── HAMBURGER (Mobile) ── */}
         <motion.button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className={`md:hidden p-2 rounded-lg transition-colors ${
-            isDark ? 'text-emerald-200 hover:bg-white/10' : 'text-[#2A7C13] hover:bg-[#FBE6C2]'
-          }`}
+          className="md:hidden p-2 rounded-lg transition-colors text-black hover:bg-[#FBE6C2]"
           whileTap={{ scale: 0.92 }}
           aria-label="Toggle menu"
         >
@@ -158,7 +139,7 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileOpen ? <X className="w-6 h-6 text-black" /> : <Menu className="w-6 h-6 text-black" />}
             </motion.span>
           </AnimatePresence>
         </motion.button>
@@ -173,9 +154,7 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className={`md:hidden overflow-hidden border-b px-4 pt-3 pb-6 ${
-              isDark ? 'bg-[#071F11] border-emerald-950/80' : 'bg-[#FAF7EE] border-[#EBD0AF]'
-            }`}
+            className="md:hidden overflow-hidden border-b px-4 pt-3 pb-6 bg-[#FAF7EE] border-[#EBD0AF]"
           >
             <div className="flex flex-col space-y-1">
               {NAV_LINKS.map((link, i) => (
@@ -185,18 +164,14 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: i * 0.05, duration: 0.25 }}
                   onClick={() => handleNavClick(link.id)}
-                  className={`flex items-center justify-between px-4 py-3 rounded-xl text-left text-base font-medium transition-colors ${
+                  className={`flex items-center justify-between px-4 py-3 rounded-xl text-left text-base font-bold transition-colors ${
                     activeSection === link.id
-                      ? isDark
-                        ? 'bg-white/10 text-white border border-white/15'
-                        : 'bg-[#FFF8CF] text-[#2A7C13] border border-[#FBE6C2]'
-                      : isDark
-                        ? 'text-emerald-100/75 hover:text-white hover:bg-white/8'
-                        : 'text-[#3E5044] hover:text-[#113309] hover:bg-[#FBE6C2]/40'
+                      ? 'bg-[#EBD0AF] text-black border border-[#DFC39F]'
+                      : 'text-black/80 hover:text-black hover:bg-[#FBE6C2]/60'
                   }`}
                 >
-                  <span>{link.label}</span>
-                  <ChevronRight className={`w-4 h-4 ${isDark ? 'text-emerald-400/50' : 'text-[#84968B]'}`} />
+                  <span className="text-black">{link.label}</span>
+                  <ChevronRight className="w-4 h-4 text-black/60" />
                 </motion.button>
               ))}
             </div>
@@ -205,14 +180,14 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25 }}
-              className="pt-4 border-t mt-3 border-[#EBD0AF]/60"
+              className="pt-4 border-t mt-3 border-[#EBD0AF]"
             >
               <button
                 onClick={() => { setMobileOpen(false); onBookDemo(); }}
-                className="w-full py-3.5 rounded-xl bg-[#F59E0B] text-slate-950 font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg"
+                className="w-full py-3.5 rounded-xl bg-[#F59E0B] text-black font-black text-sm flex items-center justify-center gap-2 shadow-lg border border-amber-600/30"
               >
-                <span>Book a Demo</span>
-                <ArrowRight className="w-4 h-4" />
+                <span className="text-black">Book a Demo</span>
+                <ArrowRight className="w-4 h-4 text-black stroke-[2.5]" />
               </button>
             </motion.div>
           </motion.div>

@@ -195,13 +195,7 @@ export default function PricingView({ onBookDemo }) {
       </section>
 
       {/* ── 4. DIRECT DEMO RESERVATION FORM ── */}
-      <section id="demo-reservation" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-        <div className="text-center space-y-1">
-          <span className="text-xs uppercase tracking-wider font-bold text-[#2A7C13]">Direct Booking</span>
-          <h3 className="text-2xl font-extrabold text-[#113309]">Reserve Your 20-Minute Product Tour</h3>
-        </div>
-        <DemoFormSection id="pricing-reservation" />
-      </section>
+      <DemoFormSection id="demo-reservation" />
 
       {/* ── 5. COMPACT FAQ ACCORDION ── */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">

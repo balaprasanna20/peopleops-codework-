@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, ShieldCheck } from 'lucide-react';
+import { Layers, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
 
 export default function Footer({ onNavigate }) {
   return (
@@ -14,7 +14,8 @@ export default function Footer({ onNavigate }) {
               <img 
                 src="/assets/peopleops-logo.png" 
                 alt="PeopleOps Logo" 
-                className="h-8 w-auto object-contain" 
+                className="h-8 w-auto object-contain cursor-pointer" 
+                onClick={() => onNavigate('overview')}
               />
             </div>
 
@@ -22,92 +23,105 @@ export default function Footer({ onNavigate }) {
               Workforce intelligence and operational analytics built for growing IT services, software development, and consulting firms (50–500 employees). Developed by Codework.
             </p>
 
-            <div className="pt-2 text-[11px] text-[#5C7063] space-y-1">
-              <p>Primary Market: <strong className="text-[#113309]">United Kingdom (UK)</strong></p>
-              <p>Secondary Market: <strong className="text-[#113309]">United States (USA)</strong></p>
+            {/* High-Converting Action CTAs (Replacing UK/US text) */}
+            <div className="pt-2 flex flex-wrap items-center gap-2.5">
+              <button
+                onClick={() => onNavigate('pricing')}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#F59E0B] hover:bg-[#D97706] text-black font-extrabold text-xs shadow-sm transition-all active:scale-95 cursor-pointer border border-amber-600/30"
+              >
+                <span>Book a 20-Min Demo</span>
+                <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+              </button>
+
+              <button
+                onClick={() => onNavigate('features')}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white hover:bg-[#FAF9F5] text-[#113309] border border-[#EBD0AF] font-bold text-xs transition-all active:scale-95 cursor-pointer shadow-xs"
+              >
+                <span>Explore Features</span>
+              </button>
             </div>
           </div>
 
-          {/* Col 2: Solutions & Product */}
+          {/* Col 2: Product & Modules */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold text-[#081D15] uppercase tracking-wider">
               Product & Modules
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => onNavigate('overview')} className="hover:text-[#0F3325] transition-colors">
+                <button onClick={() => onNavigate('overview')} className="hover:text-[#113309] hover:font-semibold transition-all text-left">
                   Overview & Telemetry
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('features')} className="hover:text-[#0F3325] transition-colors">
-                  Product Capabilities
+                <button onClick={() => onNavigate('features')} className="hover:text-[#113309] hover:font-semibold transition-all text-left">
+                  12 Product Capabilities
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('features')} className="hover:text-[#0F3325] transition-colors">
-                  Attendance & Biometrics
+                <button onClick={() => onNavigate('features')} className="hover:text-[#113309] hover:font-semibold transition-all text-left">
+                  Hardware & Turnstile Sync
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('solutions')} className="hover:text-[#0F3325] transition-colors">
-                  Ecosystem Integrations
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('features')} className="hover:text-[#0F3325] transition-colors">
+                <button onClick={() => onNavigate('features')} className="hover:text-[#113309] hover:font-semibold transition-all text-left">
                   "Ask Tara" AI Assistant
                 </button>
               </li>
+              <li>
+                <button onClick={() => onNavigate('pricing')} className="hover:text-[#113309] hover:font-semibold transition-all text-left">
+                  ROI & Cost Calculator
+                </button>
+              </li>
             </ul>
           </div>
 
-          {/* Col 3: Company & Trust */}
+          {/* Col 3: Operational Solutions */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold text-[#081D15] uppercase tracking-wider">
-              Company & Solutions
+              Operational Solutions
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => onNavigate('solutions')} className="hover:text-[#0F3325] transition-colors">
-                  Role-Based Solutions
+                <button onClick={() => onNavigate('solutions')} className="hover:text-[#113309] hover:font-semibold transition-all text-left">
+                  Before vs After Slider
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('solutions')} className="hover:text-[#0F3325] transition-colors">
-                  Problems We Solve
+                <button onClick={() => onNavigate('solutions')} className="hover:text-[#113309] hover:font-semibold transition-all text-left">
+                  6 Target Role Cockpits
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('solutions')} className="hover:text-[#0F3325] transition-colors">
-                  Ethical Governance
+                <button onClick={() => onNavigate('solutions')} className="hover:text-[#113309] hover:font-semibold transition-all text-left">
+                  Supported Industries
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('pricing')} className="hover:text-[#0F3325] transition-colors">
-                  Pricing & ROI Calculator
+                <button onClick={() => onNavigate('pricing')} className="hover:text-[#113309] hover:font-semibold transition-all text-left">
+                  Pricing Plans & Tiers
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('pricing')} className="hover:text-[#0F3325] transition-colors">
-                  Book a 20-min Demo
+                <button onClick={() => onNavigate('pricing')} className="hover:text-[#113309] hover:font-semibold transition-all text-left font-bold text-[#2A7C13]">
+                  Book a 20-min Demo →
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Col 4: Governance & Legal */}
+          {/* Col 4: Security & Ethics */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold text-[#081D15] uppercase tracking-wider">
-              Governance & Policies
+              Security & Ethics
             </h4>
             <div className="space-y-2 text-[11px] text-[#43564C]">
-              <p className="flex items-center gap-1.5 text-[#176443] font-semibold">
+              <p className="flex items-center gap-1.5 text-[#176443] font-bold">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#1F7E54]" />
-                Role-Based Access Control
+                Zero Spyware Guarantee
               </p>
-              <p>Audit Logged Administrative Access</p>
-              <p>Zero Keystroke / Screen Tracking</p>
+              <p>100% Explainable KPI Math</p>
+              <p>Read-Only Cloud API Access</p>
               <p>Human Decision Support Only</p>
             </div>
           </div>
