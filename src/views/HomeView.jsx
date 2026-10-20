@@ -13,112 +13,40 @@ import {
   LayoutDashboard
 } from 'lucide-react';
 
-/* ── Hand-drawn curly loop connector arrows matching user sketch ── */
-function CurlyConnectorArrow({ index, activeStep }) {
-  const paths = [
-    {
-      // High loop swooping into card 2
-      curve: "M 4 28 C 16 12, 28 6, 38 12 C 44 16, 42 28, 34 26 C 26 24, 28 10, 46 12 C 58 13, 68 20, 76 28",
-      head: "M 66 27 L 77 29 L 75 19",
-    },
-    {
-      // Underloop dipping then rising into card 3
-      curve: "M 4 16 C 16 30, 26 34, 36 28 C 42 24, 42 12, 34 14 C 26 16, 30 30, 46 27 C 58 24, 68 18, 76 13",
-      head: "M 66 12 L 77 12 L 74 22",
-    },
-    {
-      // Expressive loop swooping into card 4
-      curve: "M 4 26 C 14 10, 26 5, 36 10 C 43 14, 42 26, 33 25 C 26 23, 27 10, 44 11 C 56 12, 66 18, 76 26",
-      head: "M 66 25 L 77 27 L 74 17",
-    },
-  ];
-
-  const current = paths[index % paths.length];
+/* ── Simple, clean step connector arrow between workflow cards ── */
+function SimpleConnectorArrow({ index, activeStep }) {
   const isPast = index < activeStep;
   const isCurrent = index === activeStep;
 
   return (
-    <div className="hidden lg:block absolute -right-9 top-1/3 -translate-y-1/2 w-20 h-12 z-30 pointer-events-none">
-      <svg
-        viewBox="0 0 84 40"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full overflow-visible"
+    <div className="hidden lg:flex items-center justify-center absolute -right-[20px] top-1/2 -translate-y-1/2 z-30 pointer-events-none">
+      <div 
+        className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm ${
+          isCurrent || isPast
+            ? 'bg-[#2A7C13] text-white shadow-md shadow-emerald-950/20 scale-110 ring-2 ring-white'
+            : 'bg-white border border-[#EBD0AF] text-[#889B90]'
+        }`}
       >
-        {/* Base line: Green if reached/active, soft warm beige if upcoming */}
-        <path
-          d={current.curve}
-          stroke={isPast || isCurrent ? "#2A7C13" : "#D8C6B0"}
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeDasharray={isPast || isCurrent ? "none" : "3 3"}
-          className="transition-colors duration-500"
-        />
-
-        {/* Arrow head */}
-        <path
-          d={current.head}
-          stroke={isPast || isCurrent ? "#2A7C13" : "#D8C6B0"}
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="transition-colors duration-500"
-        />
-
-        {/* Active glowing data pulse beam when this arrow is currently transmitting */}
-        {isCurrent && (
-          <>
-            <motion.path
-              d={current.curve}
-              stroke="#2A7C13"
-              strokeWidth="3.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeDasharray="18 30"
-              animate={{ strokeDashoffset: [-48, 48] }}
-              transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-              filter="drop-shadow(0 0 4px rgba(42,124,19,0.7))"
-            />
-            <motion.path
-              d={current.head}
-              stroke="#F59E0B"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              animate={{ scale: [1, 1.25, 1], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </>
-        )}
-      </svg>
+        <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+      </div>
     </div>
   );
 }
 
-function VerticalCurlyArrow({ index, activeStep }) {
+function VerticalSimpleArrow({ index, activeStep }) {
   const isPast = index < activeStep;
   const isCurrent = index === activeStep;
   return (
-    <div className="flex justify-center my-1 lg:hidden">
-      <svg viewBox="0 0 40 56" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-9 h-12">
-        <path
-          d="M 20 4 C 10 16, 8 26, 14 32 C 18 36, 27 33, 25 26 C 23 20, 12 24, 14 39 C 16 45, 19 49, 21 51"
-          stroke={isPast || isCurrent ? "#2A7C13" : "#D8C6B0"}
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="transition-colors duration-500"
-        />
-        <path
-          d="M 14 45 L 21 52 L 27 45"
-          stroke={isPast || isCurrent ? "#2A7C13" : "#D8C6B0"}
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="transition-colors duration-500"
-        />
-      </svg>
+    <div className="flex justify-center my-2 lg:hidden">
+      <div 
+        className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm ${
+          isCurrent || isPast
+            ? 'bg-[#2A7C13] text-white'
+            : 'bg-white border border-[#EBD0AF] text-[#889B90]'
+        }`}
+      >
+        <ArrowRight className="w-3.5 h-3.5 rotate-90" strokeWidth={2.5} />
+      </div>
     </div>
   );
 }
@@ -210,7 +138,7 @@ export default function HomeView({ onBookDemo, onNavigate }) {
     <div className="space-y-0 bg-[#FAF7EE] text-[#26372B] font-sans selection:bg-[#2A7C13] selection:text-[#FFF8CF]">
       
       {/* ── 1. HERO SECTION ── */}
-      <section className="relative pt-24 pb-16 md:pt-28 md:pb-24 overflow-hidden bg-[#052411] text-white border-b border-emerald-950/80">
+      <section className="relative pt-5 pb-10 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-14 overflow-hidden bg-[#052411] text-white border-b border-emerald-950/80">
         
         {/* Subtle Ambient Glow */}
         <div className="absolute top-10 left-10 w-[550px] h-[550px] bg-[#0E351D]/60 rounded-full blur-[150px] pointer-events-none" />
@@ -220,7 +148,7 @@ export default function HomeView({ onBookDemo, onNavigate }) {
             
             {/* Left Column: Staggered Headline, Sub-headline & Spring Buttons */}
             <motion.div
-              className="lg:col-span-5 xl:col-span-5 space-y-6 text-left z-20"
+              className="lg:col-span-5 xl:col-span-5 space-y-6 text-left z-20 -mt-4 sm:-mt-6 lg:-mt-10 pl-2 sm:pl-6 lg:pl-10 xl:pl-14"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
@@ -247,29 +175,29 @@ export default function HomeView({ onBookDemo, onNavigate }) {
                 Spot what needs attention and decide with total confidence.
               </motion.p>
 
-              {/* Exact Buttons with Framer spring hover & tap */}
+              {/* Exact Buttons with Framer spring hover & tap - ENLARGED */}
               <motion.div 
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="pt-2 flex flex-wrap items-center gap-4"
+                className="pt-2 flex flex-wrap items-center gap-4 sm:gap-5"
               >
                 <motion.button
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.96 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 18 }}
                   onClick={onBookDemo}
-                  className="px-7 py-3.5 bg-[#F59E0B] hover:bg-[#FBBF24] text-slate-950 font-extrabold text-sm rounded-xl transition-colors shadow-lg shadow-amber-500/20 flex items-center gap-2 cursor-pointer"
+                  className="px-8 sm:px-9 py-4 sm:py-4.5 bg-[#F59E0B] hover:bg-[#FBBF24] text-slate-950 font-black text-base sm:text-[17px] rounded-2xl transition-all shadow-xl shadow-amber-500/25 flex items-center gap-2.5 cursor-pointer"
                 >
                   <span>Request a Demo</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-5 h-5" />
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.96 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 18 }}
                   onClick={() => onNavigate && onNavigate('features')}
-                  className="px-7 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-sm rounded-xl border border-white/20 transition-colors flex items-center gap-2 cursor-pointer"
+                  className="px-7 sm:px-8 py-4 sm:py-4.5 bg-white/10 hover:bg-white/20 text-white font-extrabold text-base rounded-2xl border border-white/25 transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <span>Explore Features</span>
                 </motion.button>
@@ -317,22 +245,6 @@ export default function HomeView({ onBookDemo, onNavigate }) {
                   ))}
                 </div>
 
-                {/* Subtle Slideshow Progress Dots */}
-                <div className="flex items-center gap-2 mt-2 z-20">
-                  {tabletScreens.map((screen, idx) => (
-                    <button
-                      key={screen.id}
-                      onClick={() => setCurrentScreenIndex(idx)}
-                      aria-label={`Go to ${screen.title}`}
-                      className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-                        currentScreenIndex === idx 
-                          ? 'w-7 bg-[#00C9A7]' 
-                          : 'w-2 bg-white/20 hover:bg-white/40'
-                      }`}
-                    />
-                  ))}
-                </div>
-
               </motion.div>
             </motion.div>
 
@@ -342,8 +254,8 @@ export default function HomeView({ onBookDemo, onNavigate }) {
 
 
       {/* ── 3. HOW IT WORKS (4 STEPS) ── */}
-      <section className="py-20 bg-[#FBE6C2]/30 border-y border-[#EBD0AF]/70">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="py-12 sm:py-14 bg-[#FBE6C2]/30 border-y border-[#EBD0AF]/70">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center max-w-xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-black text-[#113309] tracking-tight uppercase">
               HOW IT WORKS
@@ -370,17 +282,10 @@ export default function HomeView({ onBookDemo, onNavigate }) {
                     onClick={() => setActiveWorkflowStep(idx)}
                     className={`group relative p-7 rounded-3xl bg-white flex flex-col justify-between cursor-pointer transition-all duration-300 ${
                       isActive
-                        ? 'border-2 border-[#2A7C13] shadow-2xl shadow-emerald-950/15 ring-4 ring-[#2A7C13]/10'
-                        : 'border border-[#EBD0AF] shadow-soft hover:border-[#2A7C13]/60 hover:shadow-lg'
+                        ? 'border-2 border-[#2A7C13] shadow-xl shadow-emerald-950/10'
+                        : 'border border-[#EBD0AF] shadow-soft hover:border-[#2A7C13]/60 hover:shadow-md'
                     }`}
                   >
-                    {/* Top active gradient line */}
-                    <div
-                      className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#2A7C13] via-[#76C457] to-[#F59E0B] transition-opacity duration-300 rounded-t-3xl ${
-                        isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-60'
-                      }`}
-                    />
-
                     {/* Card Header: Step number + Tag pill */}
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
@@ -430,30 +335,15 @@ export default function HomeView({ onBookDemo, onNavigate }) {
                       </div>
                     </div>
 
-                    {/* Subtle active stage progress indicator */}
-                    <div className="mt-5 pt-3 border-t border-[#FAF7EE] flex items-center justify-between text-[11px] font-bold">
-                      {isActive ? (
-                        <span className="flex items-center gap-1.5 text-[#2A7C13]">
-                          <span className="w-2 h-2 rounded-full bg-[#2A7C13] animate-ping" />
-                          <span>Active Stage</span>
-                        </span>
-                      ) : (
-                        <span className="text-[#889B90] group-hover:text-[#2A7C13] transition-colors">
-                          Stage {ws.step}
-                        </span>
-                      )}
-                      <span className="text-[10px] text-[#889B90] font-mono">0{idx + 1}/04</span>
-                    </div>
-
-                    {/* Curly connector arrow to next step (on desktop) */}
+                    {/* Simple connector arrow to next step (on desktop) */}
                     {idx < workflowSteps.length - 1 && (
-                      <CurlyConnectorArrow index={idx} activeStep={activeWorkflowStep} />
+                      <SimpleConnectorArrow index={idx} activeStep={activeWorkflowStep} />
                     )}
                   </motion.div>
 
                   {/* Vertical arrow between cards on small screens */}
                   {idx < workflowSteps.length - 1 && (
-                    <VerticalCurlyArrow index={idx} activeStep={activeWorkflowStep} />
+                    <VerticalSimpleArrow index={idx} activeStep={activeWorkflowStep} />
                   )}
                 </React.Fragment>
               );

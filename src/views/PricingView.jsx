@@ -82,7 +82,7 @@ export default function PricingView({ onBookDemo }) {
   };
 
   return (
-    <div className="py-20 space-y-16 bg-[#FAF7EE] text-[#26372B] font-sans">
+    <div className="py-12 sm:py-14 space-y-10 sm:space-y-12 bg-[#FAF7EE] text-[#26372B] font-sans">
       
       {/* ── 1. HEADER ── */}
       <motion.section 

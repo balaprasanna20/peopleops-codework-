@@ -18,7 +18,7 @@ import {
   Check
 } from 'lucide-react';
 
-const TEAM_SIZES = ['10 - 50', '50 - 200', '200 - 500', '500+'];
+const TEAM_SIZES = ['10 - 50', '50 - 100', '100 - 200', '200+'];
 
 const TOOLS = [
   'Microsoft Teams',
@@ -32,7 +32,7 @@ export default function DemoFormSection({ id = "demo-form" }) {
     fullName: '',
     email: '',
     company: '',
-    teamSize: '50 - 200',
+    teamSize: '50 - 100',
     selectedTools: ['Microsoft Teams', 'GitHub'],
     message: ''
   });

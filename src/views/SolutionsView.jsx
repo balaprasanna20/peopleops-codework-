@@ -24,12 +24,54 @@ import {
   XCircle,
   AlertOctagon,
   Sliders,
-  ShieldAlert
 } from 'lucide-react';
+import InteractiveCockpit from '../components/InteractiveCockpit';
+
+const DASHBOARD_SCREENS = [
+  {
+    id: 'overview',
+    label: 'Overview Cockpit',
+    image: '/assets/overview-dashboard-new.png',
+    alt: 'PeopleOps Real Live Overview Dashboard',
+    hotspotId: 1
+  },
+  {
+    id: 'kpi',
+    label: 'Team-wise KPI',
+    image: '/assets/kpi-dashboard-new.png',
+    alt: 'PeopleOps Real Live KPI Dashboard',
+    hotspotId: 3
+  },
+  {
+    id: 'employees',
+    label: 'Employee Audit Profile',
+    image: '/assets/employees-dashboard-new.png',
+    alt: 'PeopleOps Real Live Employee Audit Profile Modal',
+    hotspotId: 2
+  }
+];
+
+const TARA_PRESETS = [
+  {
+    q: "Why is Amara Thakur's attendance 33%?",
+    a: "Amara Thakur has 10:26 AM avg check-in with 4 direct reports on hybrid roster. Verified via physical turnstiles & GreytHR punch logs."
+  },
+  {
+    q: "Which team leads KPI delivery this month?",
+    a: "Project Management is ranked #1 with 81.0 (Excellent). Software Development is at 70.6 (Good) across 86 scored employees."
+  },
+  {
+    q: "Explain the '88% Present but idle' alert.",
+    a: "76 out of 144 employees logged into Microsoft Teams but have zero active GitHub commits, Jira sprints or SharePoint updates in the last 4 hours."
+  }
+];
 
 export default function SolutionsView({ onBookDemo }) {
   // Interactive Cockpit Radar Hotspots State
   const [activeHotspot, setActiveHotspot] = useState(1);
+  const [activeScreen, setActiveScreen] = useState('overview');
+  const [taraPopupOpen, setTaraPopupOpen] = useState(false);
+  const [selectedTaraQ, setSelectedTaraQ] = useState(0);
 
   const HOTSPOTS = [
     {
@@ -134,7 +176,7 @@ export default function SolutionsView({ onBookDemo }) {
     },
   ];
 
-  // Target Roles (Who it is useful for) — 6 Balanced Clean Gold Cards
+  // Target Roles (Who it is useful for) — 2 Focused Leadership Cards
   const targetRoles = [
     {
       role: 'C-Suite Executives',
@@ -148,42 +190,12 @@ export default function SolutionsView({ onBookDemo }) {
       scope: 'Attendance ratios, workforce well-being, approved KPI bands, and attrition risk monitoring.',
       icon: HeartHandshake,
     },
-    {
-      role: 'Team Managers & Eng Leads',
-      tag: 'Engineering Leads · Pods',
-      scope: 'Team-level KPIs, daily presence, burn-out guards, and sprint throughput.',
-      icon: Users,
-    },
-    {
-      role: 'Project & Delivery Managers',
-      tag: 'Scrum Masters · Delivery Heads',
-      scope: 'Project health, billable hours, milestone delivery, and GitHub/Planner tracking.',
-      icon: Briefcase,
-    },
-    {
-      role: 'IT & Systems Administrators',
-      tag: 'IT Heads · Systems Admins',
-      scope: 'API integration health, biometrics sync uptime, identity matching, and error alerts.',
-      icon: Server,
-    },
-    {
-      role: 'Compliance & Security Officers',
-      tag: 'CISO · Compliance Officers',
-      scope: 'Role-based access control (RBAC), immutable audit trails, and privacy protection.',
-      icon: Lock,
-    },
   ];
 
-  // Suggested Industries
-  const industries = [
-    'IT and Software Services',
-    'Technology Consulting Firms',
-    'Distributed & Hybrid Engineering Teams',
-    'Enterprise Professional Services'
-  ];
+
 
   return (
-    <div className="relative py-24 space-y-24 bg-[#052411] text-white font-sans border-b border-emerald-950/80 overflow-hidden">
+    <div className="relative py-12 sm:py-16 space-y-12 sm:space-y-16 bg-[#052411] text-white font-sans border-b border-emerald-950/80 overflow-hidden">
       
       {/* Subtle Ambient Glows */}
       <div className="absolute top-10 left-1/4 w-[600px] h-[600px] bg-[#0E351D]/60 rounded-full blur-[160px] pointer-events-none" />
@@ -217,7 +229,12 @@ export default function SolutionsView({ onBookDemo }) {
                 <button
                   key={hotspot.id}
                   type="button"
-                  onClick={() => setActiveHotspot(hotspot.id)}
+                  onClick={() => {
+                    setActiveHotspot(hotspot.id);
+                    if (hotspot.id === 3) setActiveScreen('kpi');
+                    else if (hotspot.id === 4 || hotspot.id === 2) setActiveScreen('employees');
+                    else setActiveScreen('overview');
+                  }}
                   className={`group flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-bold transition-all duration-200 border cursor-pointer ${
                     isActive
                       ? 'bg-emerald-950/90 border-[#00C9A7] text-white shadow-[0_0_20px_rgba(0,201,167,0.35)] scale-105'
@@ -236,212 +253,255 @@ export default function SolutionsView({ onBookDemo }) {
           </div>
         </motion.div>
 
-        {/* ── COCKPIT TABLET SHOWCASE WITH RADAR PINS ── */}
-        <div className="relative max-w-5xl mx-auto">
+        {/* ── COCKPIT TABLET SHOWCASE (SLIGHT LANDSCAPE · EXACT PRODUCTION DASHBOARD PICTURE) ── */}
+        <div className="relative max-w-5xl xl:max-w-6xl mx-auto">
           {/* Ambient Studio Lighting Behind Tablet */}
           <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/20 via-teal-500/15 to-[#00C9A7]/20 rounded-3xl blur-2xl opacity-60 pointer-events-none" />
 
-          {/* Sleek Tablet Frame */}
+          {/* Sleek Landscape Tablet Frame */}
           <div className="relative rounded-2xl sm:rounded-3xl p-2 sm:p-3.5 bg-gradient-to-b from-white/20 via-white/5 to-black/60 border border-white/20 shadow-[0_30px_90px_rgba(0,0,0,0.85)] backdrop-blur-md">
             
-            {/* Tablet Header / Status Bar */}
-            <div className="flex items-center justify-between px-3 py-1.5 mb-2 rounded-xl bg-black/40 border border-white/10 text-[11px] text-emerald-200/70 font-mono">
+            {/* Tablet Header / Status Bar with 3 Screen Switcher Tabs */}
+            <div className="flex flex-col sm:flex-row items-center justify-between px-3.5 py-2 mb-2 rounded-xl bg-black/50 border border-white/10 text-xs gap-2">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block" />
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block" />
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block" />
-                <span className="ml-2 font-semibold text-white/90 hidden sm:inline">PeopleOps Intelligence Cockpit v2.4</span>
+                <span className="ml-2 font-bold text-white tracking-tight hidden md:inline">
+                  PeopleOps Intelligence Cockpit v2.4
+                </span>
               </div>
-              <div className="flex items-center gap-2 text-emerald-300">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00C9A7] animate-pulse" />
-                <span className="text-[10px] tracking-wide uppercase font-semibold">Live Operational Telemetry</span>
-              </div>
-            </div>
 
-            {/* Dashboard Container with Pins */}
-            <div className="relative rounded-xl overflow-hidden bg-[#0A1A0F] border border-white/10 shadow-2xl">
-              
-              {/* Actual Dashboard Screenshot */}
-              <img
-                src="/assets/overview-dashboard-new.png"
-                alt="PeopleOps Live Intelligence Dashboard Cockpit"
-                className="w-full h-auto block select-none"
-              />
-
-              {/* 4 Glowing Pulsing Radar Pins */}
-              {HOTSPOTS.map((hotspot) => {
-                const isActive = activeHotspot === hotspot.id;
-                const Icon = hotspot.icon;
-                return (
-                  <div
-                    key={hotspot.id}
-                    className="absolute z-20"
-                    style={{ left: hotspot.x, top: hotspot.y, transform: 'translate(-50%, -50%)' }}
-                  >
-                    {/* Interactive Button */}
+              {/* Exact Screen Picture Switcher Tabs */}
+              <div className="flex items-center gap-1.5 p-1 bg-white/10 rounded-xl border border-white/10 text-xs">
+                {DASHBOARD_SCREENS.map(screen => {
+                  const isActive = activeScreen === screen.id;
+                  return (
                     <button
+                      key={screen.id}
                       type="button"
-                      onClick={() => setActiveHotspot(hotspot.id)}
-                      className="group relative flex items-center justify-center cursor-pointer focus:outline-none"
-                      aria-label={`Inspect ${hotspot.name}`}
+                      onClick={() => {
+                        setActiveScreen(screen.id);
+                        setActiveHotspot(screen.hotspotId);
+                      }}
+                      className={`px-3 py-1 rounded-lg font-bold transition-all text-xs cursor-pointer ${
+                        isActive
+                          ? 'bg-[#00C9A7] text-black shadow-md'
+                          : 'text-white/80 hover:text-white hover:bg-white/10'
+                      }`}
                     >
-                      {/* Radar concentric pulsing waves */}
-                      <span
-                        className="absolute w-10 h-10 sm:w-12 sm:h-12 rounded-full animate-ping pointer-events-none opacity-40"
-                        style={{ backgroundColor: hotspot.accentColor }}
-                      />
-                      <span
-                        className="absolute w-6 h-6 sm:w-8 sm:h-8 rounded-full pointer-events-none opacity-30 animate-pulse"
-                        style={{ backgroundColor: hotspot.accentColor }}
-                      />
-
-                      {/* Radar Pin Circle */}
-                      <span
-                        className={`relative w-7 h-7 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-black text-xs transition-all duration-300 border-2 shadow-2xl ${
-                          isActive
-                            ? 'scale-125 ring-4 ring-white/30 text-black'
-                            : 'scale-100 hover:scale-115 text-white bg-black/80'
-                        }`}
-                        style={{
-                          backgroundColor: isActive ? hotspot.accentColor : 'rgba(10, 26, 15, 0.85)',
-                          borderColor: hotspot.accentColor,
-                          boxShadow: isActive ? `0 0 25px ${hotspot.accentColor}` : '0 4px 15px rgba(0,0,0,0.5)'
-                        }}
-                      >
-                        <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isActive ? 'text-black' : 'text-white'}`} />
-                      </span>
-
-                      {/* Floating Mini Tag on Dashboard for Quick Recognition */}
-                      <div
-                        className={`absolute left-1/2 -bottom-7 sm:-bottom-8 -translate-x-1/2 pointer-events-none whitespace-nowrap px-2 py-0.5 rounded-md text-[9px] sm:text-[10px] font-bold tracking-tight border backdrop-blur-md transition-all duration-200 hidden sm:flex items-center gap-1 shadow-lg ${
-                          isActive
-                            ? 'bg-black/90 text-white border-white/30 opacity-100 translate-y-0 scale-100'
-                            : 'bg-black/75 text-emerald-100/80 border-white/10 opacity-80 group-hover:opacity-100'
-                        }`}
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: hotspot.accentColor }} />
-                        <span>{hotspot.shortLabel}</span>
-                      </div>
+                      {screen.label}
                     </button>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              <div className="hidden lg:flex items-center gap-2 text-emerald-300 text-[11px] font-mono">
+                <span className="w-2 h-2 rounded-full bg-[#00C9A7] animate-pulse" />
+                <span>Exact Production UI</span>
+              </div>
             </div>
+
+            {/* Exact Dashboard Picture Container with REAL-TIME TOUCHABLE SIDEBAR ZONES */}
+            <div className="relative rounded-xl overflow-hidden bg-[#0A1A0F] border border-white/10 shadow-2xl select-none group">
+              {(() => {
+                const currentScreen = DASHBOARD_SCREENS.find(s => s.id === activeScreen) || DASHBOARD_SCREENS[0];
+                return (
+                  <motion.img
+                    key={currentScreen.id}
+                    src={currentScreen.image}
+                    alt={currentScreen.alt}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.25 }}
+                    className="w-full h-auto block select-none pointer-events-none"
+                  />
+                );
+              })()}
+
+              {/* ══ REAL-TIME SIDEBAR TOUCH / CLICK ZONES OVER REAL DASHBOARD PICTURE ══ */}
+              
+              {/* 1. Overview Tab Hotspot Zone */}
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveScreen('overview');
+                  setActiveHotspot(1);
+                }}
+                className={`absolute left-[1%] top-[16.5%] w-[13.5%] h-[6.5%] rounded-xl cursor-pointer transition-all ${
+                  activeScreen === 'overview'
+                    ? 'ring-2 ring-[#00C9A7]/50 bg-[#00A896]/15'
+                    : 'hover:bg-white/10 hover:ring-1 hover:ring-white/30'
+                }`}
+                title="Touch to switch to Overview"
+              >
+                <span className="sr-only">Touch to switch to Overview Dashboard</span>
+              </button>
+
+              {/* 2. KPI Tab Hotspot Zone */}
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveScreen('kpi');
+                  setActiveHotspot(3);
+                }}
+                className={`absolute left-[1%] top-[23.8%] w-[13.5%] h-[6.5%] rounded-xl cursor-pointer transition-all ${
+                  activeScreen === 'kpi'
+                    ? 'ring-2 ring-[#00C9A7]/50 bg-[#00A896]/15'
+                    : 'hover:bg-white/10 hover:ring-1 hover:ring-white/30'
+                }`}
+                title="Touch to switch to Team-wise KPI"
+              >
+                <span className="sr-only">Touch to switch to Team-wise KPI Dashboard</span>
+              </button>
+
+              {/* 3. Employees Tab Hotspot Zone */}
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveScreen('employees');
+                  setActiveHotspot(2);
+                }}
+                className={`absolute left-[1%] top-[31.2%] w-[13.5%] h-[6.5%] rounded-xl cursor-pointer transition-all ${
+                  activeScreen === 'employees'
+                    ? 'ring-2 ring-[#00C9A7]/50 bg-[#00A896]/15'
+                    : 'hover:bg-white/10 hover:ring-1 hover:ring-white/30'
+                }`}
+                title="Touch to switch to Employees & Amara Thakur modal"
+              >
+                <span className="sr-only">Touch to switch to Employees Directory</span>
+              </button>
+
+              {/* 4. Attendance Tab Hotspot Zone */}
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveScreen('overview');
+                  setActiveHotspot(1);
+                }}
+                className="absolute left-[1%] top-[38.5%] w-[13.5%] h-[6.5%] rounded-xl cursor-pointer transition-all hover:bg-white/10 hover:ring-1 hover:ring-white/30"
+                title="Touch to view Turnstile Attendance sync metrics"
+              >
+                <span className="sr-only">Touch to view Attendance metrics</span>
+              </button>
+
+              {/* 5. Pink Alert 'See who ›' Click Zone on Overview Picture */}
+              {activeScreen === 'overview' && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveScreen('employees');
+                    setActiveHotspot(2);
+                  }}
+                  className="absolute left-[16.5%] top-[58.8%] w-[38%] h-[4.5%] rounded-lg cursor-pointer hover:bg-rose-500/15 transition-all hover:ring-1 hover:ring-rose-400/40"
+                  title="Touch to inspect employees marked Present but idle"
+                >
+                  <span className="sr-only">Inspect Present but idle employees</span>
+                </button>
+              )}
+
+              {/* 6. Close Modal '✕' Click Zone on Employees Picture */}
+              {activeScreen === 'employees' && (
+                <button
+                  type="button"
+                  onClick={() => setActiveScreen('overview')}
+                  className="absolute right-[23.5%] top-[23%] w-[3%] h-[4%] rounded-full cursor-pointer hover:bg-black/10 transition-all flex items-center justify-center text-transparent hover:text-black"
+                  title="Click to close Amara Thakur profile modal"
+                >
+                  <span className="sr-only">Close Profile Modal</span>
+                </button>
+              )}
+
+              {/* 7. Bottom-Right "+ Ask Tara" Click Zone */}
+              <button
+                type="button"
+                onClick={() => setTaraPopupOpen(!taraPopupOpen)}
+                className="absolute right-[2.2%] bottom-[4.2%] w-[10.5%] h-[6.5%] rounded-full cursor-pointer hover:ring-2 hover:ring-[#00C9A7] transition-all hover:shadow-[0_0_15px_rgba(0,201,167,0.4)]"
+                title="Touch to launch Ask Tara AI Assistant"
+              >
+                <span className="sr-only">Launch Ask Tara AI</span>
+              </button>
+
+              {/* Floating Helper Pill indicating real-time touchable sidebar */}
+              <div className="absolute left-[1.5%] bottom-[2%] pointer-events-none hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/75 backdrop-blur-md border border-white/15 text-[10px] text-emerald-200/90 font-mono shadow-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00C9A7] animate-pulse" />
+                <span>Real-time Interactive: Touch sidebar tabs directly on dashboard</span>
+              </div>
+
+              {/* ── EXPANDABLE TARA AI TEST DRAWER OVER DASHBOARD ── */}
+              <AnimatePresence>
+                {taraPopupOpen && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 15 }}
+                    className="absolute bottom-16 right-4 sm:right-6 w-80 sm:w-96 bg-[#071F11]/95 backdrop-blur-md text-white p-4 rounded-2xl shadow-2xl border border-emerald-500/40 z-40 space-y-3"
+                  >
+                    <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-emerald-400" />
+                        <span className="text-xs font-bold text-white uppercase">Ask Tara AI Assistant</span>
+                      </div>
+                      <button 
+                        type="button" 
+                        onClick={() => setTaraPopupOpen(false)}
+                        className="text-emerald-300 hover:text-white text-xs font-bold cursor-pointer"
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] text-emerald-300/80 block uppercase font-bold tracking-wider">
+                        Select a question to test live response:
+                      </span>
+                      <div className="space-y-1">
+                        {TARA_PRESETS.map((item, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => setSelectedTaraQ(idx)}
+                            className={`text-xs p-2 rounded-lg border transition-all text-left w-full cursor-pointer ${
+                              selectedTaraQ === idx 
+                                ? 'bg-[#008080] text-white border-emerald-400 font-bold' 
+                                : 'bg-white/5 text-emerald-100 hover:bg-white/10 border-white/10'
+                            }`}
+                          >
+                            {item.q}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-black/50 border border-emerald-500/20 text-xs space-y-1">
+                      <span className="text-emerald-400 font-bold text-[11px] block">Verified Answer:</span>
+                      <p className="text-emerald-100/90 leading-relaxed font-sans text-xs">
+                        {TARA_PRESETS[selectedTaraQ].a}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+            </div>
+
           </div>
         </div>
 
-        {/* ── DYNAMIC ACTIVE HOTSPOT CALLOUT CARD (SYNCED TO PIN) ── */}
-        <div className="max-w-4xl mx-auto">
-          <AnimatePresence mode="wait">
-            {(() => {
-              const current = HOTSPOTS.find(h => h.id === activeHotspot) || HOTSPOTS[0];
-              const Icon = current.icon;
-              return (
-                <motion.div
-                  key={current.id}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.25 }}
-                  className="rounded-2xl p-5 sm:p-7 bg-[#0A2613]/90 border border-emerald-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-md space-y-5"
-                >
-                  {/* Top Bar with Callout Quote */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span 
-                          className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider text-black"
-                          style={{ backgroundColor: current.accentColor }}
-                        >
-                          Pin 0{current.id} · {current.tag}
-                        </span>
-                        <span className="text-xs text-emerald-200/60 font-mono hidden sm:inline">
-                          Hotspot: {current.shortLabel}
-                        </span>
-                      </div>
-                      <h3 className="text-xl sm:text-2xl font-black text-white flex items-center gap-2.5">
-                        <Icon className="w-5 h-5 shrink-0" style={{ color: current.accentColor }} />
-                        <span>{current.callout}</span>
-                      </h3>
-                    </div>
-
-                    {/* Quick Next / Switch button */}
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setActiveHotspot(prev => (prev % HOTSPOTS.length) + 1)}
-                        className="px-3.5 py-1.5 rounded-lg text-xs font-bold text-emerald-200 bg-white/5 hover:bg-white/10 border border-white/15 transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
-                      >
-                        <span>Next Hotspot</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* 2-Column Comparison: Without PeopleOps vs Live On Dashboard */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* The Pain Point Eliminated */}
-                    <div className="rounded-xl p-4 bg-rose-950/30 border border-rose-500/20 space-y-2">
-                      <div className="flex items-center gap-2 text-rose-400 text-xs font-bold uppercase tracking-wider">
-                        <XCircle className="w-4 h-4 text-rose-400 shrink-0" />
-                        <span>The Pain Point Eliminated</span>
-                      </div>
-                      <p className="text-xs sm:text-sm text-rose-100/80 leading-relaxed">
-                        {current.problem}
-                      </p>
-                    </div>
-
-                    {/* How PeopleOps Solves It */}
-                    <div className="rounded-xl p-4 bg-emerald-950/40 border border-[#00C9A7]/30 space-y-2">
-                      <div className="flex items-center gap-2 text-[#00C9A7] text-xs font-bold uppercase tracking-wider">
-                        <CheckCircle2 className="w-4 h-4 text-[#00C9A7] shrink-0" />
-                        <span>How PeopleOps Solves It Live</span>
-                      </div>
-                      <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-medium">
-                        {current.solution}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Bottom Metric & CTA */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 text-xs border-t border-white/10">
-                    <div className="flex items-center gap-2 text-emerald-200 font-medium">
-                      <Zap className="w-4 h-4 text-amber-400 shrink-0" />
-                      <span><strong>Verified Result:</strong> {current.metric}</span>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={onBookDemo}
-                      className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#00C9A7] hover:bg-[#00B594] text-black font-bold text-xs transition-all shadow-md cursor-pointer"
-                    >
-                      <span>See This Live On Your Data</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </motion.div>
-              );
-            })()}
-          </AnimatePresence>
-        </div>
       </section>
 
-      {/* ── 4. WHO IT IS USEFUL FOR (6 BEIGE CARDS WITH FRAMER MOTION) ── */}
-      <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      {/* ── 4. WHO IT IS USEFUL FOR (2 LEADERSHIP CARDS WITH FRAMER MOTION) ── */}
+      <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs uppercase tracking-wider font-extrabold text-[#2A7C13] bg-[#FAF7EE] border border-[#EBD0AF] px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-[#2A7C13]" />
-            <span>Target Stakeholders · 6 Core Roles</span>
-          </span>
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-            Who it is useful for
+          <h3 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">
+            WHO IT IS USEFUL FOR
           </h3>
           <p className="text-xs sm:text-sm text-emerald-200/80">
-            Engineered with bespoke views tailored for every level of organizational leadership.
+            Engineered with bespoke views tailored for executive leadership and People Ops.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-6 sm:gap-8">
           {targetRoles.map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -488,34 +548,14 @@ export default function SolutionsView({ onBookDemo }) {
         </div>
       </section>
 
-      {/* ── 5. SUGGESTED INDUSTRIES ── */}
-      <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#0B2C19] border border-emerald-700/60 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="space-y-1 text-center sm:text-left">
-            <span className="text-xs font-bold text-[#00C9A7] uppercase tracking-wider">Suggested Industries</span>
-            <h4 className="text-xl font-black text-white">Ideal for Modern Distributed Teams</h4>
-            <p className="text-xs text-emerald-200/70">
-              Tailored for 50–500 employee organizations managing hybrid workforces.
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-2.5">
-            {industries.map((ind) => (
-              <span key={ind} className="px-3.5 py-1.5 rounded-xl bg-white/10 border border-white/20 text-xs font-bold text-white hover:bg-white/15 transition-colors">
-                {ind}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 6. CTA BANNER ── */}
-      <section className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-        <h3 className="text-2xl font-black text-white">
+      {/* ── 5. CTA BANNER (LIFTED UP) ── */}
+      <section className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4 pt-2 sm:pt-4">
+        <h3 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">
           Solve workforce blindspots for your leadership team today.
         </h3>
         <button
           onClick={onBookDemo}
-          className="px-8 py-3.5 bg-[#F59E0B] hover:bg-[#FBBF24] text-slate-950 font-extrabold text-sm rounded-xl shadow-[0_8px_30px_rgba(245,158,11,0.35)] transition-all inline-flex items-center gap-2 hover:scale-105"
+          className="px-8 py-3.5 bg-[#F59E0B] hover:bg-[#FBBF24] text-slate-950 font-extrabold text-sm rounded-xl shadow-[0_8px_30px_rgba(245,158,11,0.35)] transition-all inline-flex items-center gap-2 hover:scale-105 cursor-pointer"
         >
           <span>Book a Solution Walkthrough</span>
           <ArrowRight className="w-4 h-4" />

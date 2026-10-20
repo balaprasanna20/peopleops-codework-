@@ -4,7 +4,7 @@ import { Layers, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
 export default function Footer({ onNavigate }) {
   return (
     <footer className="bg-[#FBE6C2]/30 border-t border-[#EBD0AF] text-[#3E5044] text-xs font-sans">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           
