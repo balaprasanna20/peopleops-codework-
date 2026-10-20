@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   ArrowRight, 
   LayoutDashboard, 
@@ -154,43 +154,6 @@ export default function ProductView({ onBookDemo }) {
                     {f.desc}
                   </p>
                 </div>
-
-                {/* ── BOTTOM LIVE STATUS GLOW FOOTER ── */}
-                <div className="pt-3.5 mt-4 border-t border-[#FAF7EE] flex items-center justify-between text-[11px] font-bold">
-                  <AnimatePresence mode="wait">
-                    {isHovered ? (
-                      <motion.div
-                        key="active-status"
-                        initial={{ opacity: 0, x: -6 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -6 }}
-                        transition={{ duration: 0.18 }}
-                        className="flex items-center gap-1.5 text-[#2A7C13]"
-                      >
-                        <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2A7C13] opacity-75" />
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2A7C13]" />
-                        </span>
-                        <span className="font-mono text-[10px] uppercase tracking-wider">{f.status}</span>
-                      </motion.div>
-                    ) : (
-                      <span className="text-[#8C9E93] text-[10px] font-mono tracking-wider transition-colors">
-                        Capability {f.id}
-                      </span>
-                    )}
-                  </AnimatePresence>
-
-                  <motion.span
-                    animate={{ x: isHovered ? 3 : 0 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                    className={`text-xs font-bold transition-colors ${
-                      isHovered ? 'text-[#2A7C13]' : 'text-[#8C9E93]'
-                    }`}
-                  >
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </motion.span>
-                </div>
-
               </motion.div>
             );
           })}
