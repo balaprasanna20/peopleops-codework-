@@ -5,6 +5,7 @@ import HomeView from './views/HomeView';
 import ProductView from './views/ProductView';
 import SolutionsView from './views/SolutionsView';
 import PricingView from './views/PricingView';
+import FloatingLeadDrawer from './components/FloatingLeadDrawer';
 
 /* ══════════════════════════════════════════════════
    PEOPLEOPS INTELLIGENCE — 4 CORE MODULES
@@ -91,6 +92,9 @@ export default function App() {
 
       {/* ── Footer ── */}
       <Footer onNavigate={scrollTo} />
+
+      {/* ── Creative Vision Floating Lead Drawer ── */}
+      <FloatingLeadDrawer onBookDemo={handleBookDemo} />
     </div>
   );
 }
