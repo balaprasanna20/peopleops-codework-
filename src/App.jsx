@@ -17,20 +17,27 @@ import FloatingLeadDrawer from './components/FloatingLeadDrawer';
 export default function App() {
   const [activeSection, setActiveSection] = useState('overview');
 
-  /* ── Smooth Scroll Handler ── */
+  /* ── Smooth Scroll Handler (Pixel-perfect navbar offset) ── */
   const scrollTo = (id) => {
     setActiveSection(id);
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const navbarHeight = 76;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
-  const handleBookDemo = () => scrollTo('pricing');
+  const handleBookDemo = () => scrollTo('contact');
 
   /* ── Track active section as user scrolls ── */
   useEffect(() => {
-    const SECTIONS = ['overview', 'features', 'solutions', 'pricing'];
+    const SECTIONS = ['overview', 'features', 'solutions', 'pricing', 'contact'];
     const observers = [];
 
     SECTIONS.forEach((id) => {
@@ -45,7 +52,7 @@ export default function App() {
         },
         {
           threshold: 0.15,
-          rootMargin: '-10% 0px -40% 0px'
+          rootMargin: '-76px 0px -40% 0px'
         }
       );
       obs.observe(el);

@@ -60,8 +60,12 @@ export default function PricingView({ onBookDemo }) {
   ];
 
   const scrollToDemoForm = () => {
-    const el = document.getElementById('demo-reservation');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById('contact') || document.getElementById('demo-reservation');
+    if (el) {
+      const navbarHeight = 76;
+      const offsetPosition = el.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -182,7 +186,7 @@ export default function PricingView({ onBookDemo }) {
       </section>
 
       {/* ── 4. DIRECT DEMO RESERVATION FORM ── */}
-      <DemoFormSection id="demo-reservation" />
+      <DemoFormSection id="contact" />
     </div>
   );
 }

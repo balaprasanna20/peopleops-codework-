@@ -26,7 +26,7 @@ export default function Footer({ onNavigate }) {
             {/* High-Converting Action CTAs (Replacing UK/US text) */}
             <div className="pt-2 flex flex-wrap items-center gap-2.5">
               <button
-                onClick={() => onNavigate('pricing')}
+                onClick={() => onNavigate('contact')}
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#F59E0B] hover:bg-[#D97706] text-black font-extrabold text-xs shadow-sm transition-all active:scale-95 cursor-pointer border border-amber-600/30"
               >
                 <span>Book a 20-Min Demo</span>
@@ -103,7 +103,7 @@ export default function Footer({ onNavigate }) {
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('pricing')} className="hover:text-[#113309] hover:font-semibold transition-all text-left font-bold text-[#2A7C13]">
+                <button onClick={() => onNavigate('contact')} className="hover:text-[#113309] hover:font-semibold transition-all text-left font-bold text-[#2A7C13]">
                   Book a 20-min Demo →
                 </button>
               </li>

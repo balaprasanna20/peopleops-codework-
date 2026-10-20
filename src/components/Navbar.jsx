@@ -7,7 +7,7 @@ const NAV_LINKS = [
   { label: 'Features',  id: 'features'  },
   { label: 'Solutions', id: 'solutions' },
   { label: 'Pricing',   id: 'pricing'   },
-  { label: 'Contact',   id: 'pricing'   },
+  { label: 'Contact',   id: 'contact'   },
 ];
 
 export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
@@ -58,7 +58,7 @@ export default function Navbar({ activeSection, onNavigate, onBookDemo }) {
         {/* ── CENTER: WORKLOGIX NAV LINKS ── */}
         <nav className="hidden md:flex items-center gap-7">
           {NAV_LINKS.map((link) => {
-            const isActive = activeSection === link.id && link.label !== 'Contact';
+            const isActive = activeSection === link.id;
             return (
               <button
                 key={link.label}
