@@ -33,23 +33,7 @@ function SimpleConnectorArrow({ index, activeStep }) {
   );
 }
 
-function VerticalSimpleArrow({ index, activeStep }) {
-  const isPast = index < activeStep;
-  const isCurrent = index === activeStep;
-  return (
-    <div className="flex justify-center my-2 lg:hidden">
-      <div 
-        className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm ${
-          isCurrent || isPast
-            ? 'bg-[#2A7C13] text-white'
-            : 'bg-white border border-[#EBD0AF] text-[#889B90]'
-        }`}
-      >
-        <ArrowRight className="w-3.5 h-3.5 rotate-90" strokeWidth={2.5} />
-      </div>
-    </div>
-  );
-}
+
 
 export default function HomeView({ onBookDemo, onNavigate }) {
   // Dynamic Hand-Held Tablet Screens (Warped 4K Screens inside Bezel with Hands on Top)
@@ -280,7 +264,7 @@ export default function HomeView({ onBookDemo, onNavigate }) {
                     }}
                     onMouseLeave={() => setIsWorkflowHovered(false)}
                     onClick={() => setActiveWorkflowStep(idx)}
-                    className={`group relative p-7 rounded-3xl bg-white flex flex-col justify-between cursor-pointer transition-all duration-300 ${
+                    className={`group relative p-6 sm:p-7 rounded-3xl bg-white flex flex-col justify-between cursor-pointer transition-all duration-300 ${
                       isActive
                         ? 'border-2 border-[#2A7C13] shadow-xl shadow-emerald-950/10'
                         : 'border border-[#EBD0AF] shadow-soft hover:border-[#2A7C13]/60 hover:shadow-md'
@@ -340,11 +324,6 @@ export default function HomeView({ onBookDemo, onNavigate }) {
                       <SimpleConnectorArrow index={idx} activeStep={activeWorkflowStep} />
                     )}
                   </motion.div>
-
-                  {/* Vertical arrow between cards on small screens */}
-                  {idx < workflowSteps.length - 1 && (
-                    <VerticalSimpleArrow index={idx} activeStep={activeWorkflowStep} />
-                  )}
                 </React.Fragment>
               );
             })}

@@ -25,7 +25,6 @@ import {
   AlertOctagon,
   Sliders,
 } from 'lucide-react';
-import InteractiveCockpit from '../components/InteractiveCockpit';
 
 const DASHBOARD_SCREENS = [
   {

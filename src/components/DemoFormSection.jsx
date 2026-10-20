@@ -61,7 +61,7 @@ export default function DemoFormSection({ id = "demo-form" }) {
   };
 
   return (
-    <section id={id} className="py-24 relative bg-[#FAF7EE] border-t border-[#EBD0AF] overflow-hidden">
+    <section id={id} className="py-12 sm:py-16 relative bg-[#FAF7EE] border-t border-[#EBD0AF] overflow-hidden">
       
       {/* ══ EXACT PEOPLEOPS LOGO CONTINUOUS RUNNING BACKGROUND ANIMATION ══ */}
       <div 
