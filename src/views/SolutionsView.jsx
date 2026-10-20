@@ -193,21 +193,19 @@ export default function SolutionsView({ onBookDemo }) {
       <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold tracking-wider uppercase shadow-[0_0_20px_rgba(0,201,167,0.15)]">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00C9A7] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00C9A7]"></span>
-            </span>
-            <span>Interactive Live Cockpit · Real-Time Radar Hotspots</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
-            The problems we solve. Built for modern teams.
+        <motion.div 
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center max-w-3xl mx-auto space-y-3"
+        >
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight uppercase">
+            PRACTICAL SOLUTIONS.
           </h2>
 
           <p className="text-sm sm:text-base text-emerald-100/85 max-w-2xl mx-auto leading-relaxed">
-            Click any pulsing radar hotspot on the live PeopleOps cockpit below to explore how physical turnstiles, burnout signals, and transparent KPI math work in real-time.
+            Real solutions.
           </p>
 
           {/* Quick Selector Pills */}
@@ -236,7 +234,7 @@ export default function SolutionsView({ onBookDemo }) {
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
         {/* ── COCKPIT TABLET SHOWCASE WITH RADAR PINS ── */}
         <div className="relative max-w-5xl mx-auto">

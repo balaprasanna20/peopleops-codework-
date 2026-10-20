@@ -85,18 +85,19 @@ export default function PricingView({ onBookDemo }) {
     <div className="py-20 space-y-16 bg-[#FAF7EE] text-[#26372B] font-sans">
       
       {/* ── 1. HEADER ── */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF8CF] border border-[#FBE6C2] text-[#2A7C13] text-xs font-semibold uppercase tracking-wider">
-          <Sparkles className="w-3.5 h-3.5 text-[#2A7C13]" />
-          <span>Transparent Pricing</span>
-        </div>
-
-        <h1 className="text-3xl sm:text-5xl font-black text-[#113309] tracking-tight leading-tight">
-          Predictable investment tailored to your team size.
+      <motion.section 
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4"
+      >
+        <h1 className="text-3xl sm:text-5xl font-black text-[#113309] tracking-tight leading-tight uppercase">
+          PREDICTABLE INVESTMENT TAILORED TO YOUR TEAM SIZE.
         </h1>
 
         <p className="text-sm sm:text-base text-[#3E5044] max-w-2xl mx-auto leading-relaxed">
-          Transparent per-seat licensing with zero hidden modules or setup fees. Experience the live platform in 20 minutes.
+          Simple per-seat plans.
         </p>
 
         {/* Billing Toggle */}
@@ -104,7 +105,7 @@ export default function PricingView({ onBookDemo }) {
           <div className="bg-[#FBE6C2]/50 p-1 rounded-xl border border-[#EBD0AF] flex items-center">
             <button
               onClick={() => setBillingPeriod('annual')}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                 billingPeriod === 'annual'
                   ? 'bg-[#2A7C13] text-white shadow-sm'
                   : 'text-[#3E5044] hover:text-[#113309]'
@@ -114,7 +115,7 @@ export default function PricingView({ onBookDemo }) {
             </button>
             <button
               onClick={() => setBillingPeriod('monthly')}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                 billingPeriod === 'monthly'
                   ? 'bg-[#2A7C13] text-white shadow-sm'
                   : 'text-[#3E5044] hover:text-[#113309]'
@@ -124,8 +125,7 @@ export default function PricingView({ onBookDemo }) {
             </button>
           </div>
         </div>
-      </section>
-
+      </motion.section>
 
       {/* ── 3. THREE PRICING TIERS ── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -133,11 +133,15 @@ export default function PricingView({ onBookDemo }) {
           {tiers.map((tier) => (
             <motion.div
               key={tier.name}
-              whileHover={{ y: -4 }}
-              className={`relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all ${
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-20px' }}
+              transition={{ duration: 0.45 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className={`relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all cursor-pointer ${
                 tier.popular
-                  ? 'bg-gradient-to-b from-[#FAF7EE] to-white border-2 border-[#2A7C13] shadow-xl'
-                  : 'bg-white border border-[#EBD0AF] shadow-sm'
+                  ? 'bg-gradient-to-b from-[#FAF7EE] to-white border-2 border-[#2A7C13] shadow-xl shadow-emerald-950/10 ring-2 ring-[#2A7C13]/15'
+                  : 'bg-white border border-[#EBD0AF] shadow-sm hover:border-[#2A7C13]/70 hover:shadow-md'
               }`}
             >
               {tier.popular && (

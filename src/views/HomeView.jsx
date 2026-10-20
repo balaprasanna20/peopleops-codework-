@@ -10,9 +10,7 @@ import {
   Cable,
   GitMerge,
   Cpu,
-  LayoutDashboard,
-  ChevronLeft,
-  ChevronRight
+  LayoutDashboard
 } from 'lucide-react';
 
 /* ── Hand-drawn curly loop connector arrows matching user sketch ── */
@@ -155,23 +153,13 @@ export default function HomeView({ onBookDemo, onNavigate }) {
   ];
 
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
-  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
 
   useEffect(() => {
-    if (isCarouselPaused) return;
     const timer = setInterval(() => {
       setCurrentScreenIndex((prev) => (prev + 1) % tabletScreens.length);
     }, 4500);
     return () => clearInterval(timer);
-  }, [isCarouselPaused, tabletScreens.length]);
-
-  const handlePrevScreen = () => {
-    setCurrentScreenIndex((prev) => (prev === 0 ? tabletScreens.length - 1 : prev - 1));
-  };
-
-  const handleNextScreen = () => {
-    setCurrentScreenIndex((prev) => (prev + 1) % tabletScreens.length);
-  };
+  }, [tabletScreens.length]);
 
   // Step-by-Step Auto Story Sequence
   const [activeWorkflowStep, setActiveWorkflowStep] = useState(0);
@@ -230,101 +218,122 @@ export default function HomeView({ onBookDemo, onNavigate }) {
         <div className="max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
-            {/* Left Column: Exact Headline, Sub-headline & Buttons */}
+            {/* Left Column: Staggered Headline, Sub-headline & Spring Buttons */}
             <motion.div
-              className="lg:col-span-5 space-y-6 text-left z-20"
-              initial={{ opacity: 0, y: 20 }}
+              className="lg:col-span-5 xl:col-span-5 space-y-6 text-left z-20"
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
             >
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-emerald-200 text-xs font-semibold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-[#00C9A7]" />
-                <span>Workforce Intelligence & Operations</span>
-              </div>
+              {/* Animated Hero Headline */}
+              <motion.h1 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="text-4xl sm:text-5xl lg:text-[50px] font-black text-white tracking-tight leading-[1.08] uppercase"
+              >
+                ONE DASHBOARD.<br />
+                YOUR ENTIRE <span className="text-[#00C9A7]">WORKFORCE.</span>
+              </motion.h1>
 
-              {/* Exact Hero Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-black text-white tracking-tight leading-[1.08]">
-                See your whole workforce in one place.
-              </h1>
+              {/* Animated Sub-headline */}
+              <motion.p 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-base sm:text-lg text-emerald-100/90 leading-relaxed font-normal max-w-xl"
+              >
+                Connect attendance, daily work tools, and KPIs in one screen.<br className="hidden sm:inline" />
+                Spot what needs attention and decide with total confidence.
+              </motion.p>
 
-              {/* Exact Sub-headline */}
-              <p className="text-base sm:text-lg text-emerald-100/90 leading-relaxed font-normal max-w-xl">
-                PeopleOps brings attendance, KPIs, projects and work activity from your existing tools into one dashboard, so managers can see what needs attention and decide with confidence.
-              </p>
-
-              {/* Exact Buttons */}
-              <div className="pt-2 flex flex-wrap items-center gap-4">
-                <button
+              {/* Exact Buttons with Framer spring hover & tap */}
+              <motion.div 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="pt-2 flex flex-wrap items-center gap-4"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 18 }}
                   onClick={onBookDemo}
-                  className="px-7 py-3.5 bg-[#F59E0B] hover:bg-[#FBBF24] text-slate-950 font-extrabold text-sm rounded-xl transition-all shadow-lg flex items-center gap-2"
+                  className="px-7 py-3.5 bg-[#F59E0B] hover:bg-[#FBBF24] text-slate-950 font-extrabold text-sm rounded-xl transition-colors shadow-lg shadow-amber-500/20 flex items-center gap-2 cursor-pointer"
                 >
                   <span>Request a Demo</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 18 }}
                   onClick={() => onNavigate && onNavigate('features')}
-                  className="px-7 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-sm rounded-xl border border-white/20 transition-all flex items-center gap-2"
+                  className="px-7 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-sm rounded-xl border border-white/20 transition-colors flex items-center gap-2 cursor-pointer"
                 >
                   <span>Explore Features</span>
-                </button>
-              </div>
-
-              {/* Trust Tag */}
-              <div className="pt-2 text-xs text-emerald-200/70 flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#00C9A7]" />
-                <span>Human review decision-support · Zero keystroke monitoring</span>
-              </div>
+                </motion.button>
+              </motion.div>
             </motion.div>
 
 
-            {/* Right Column: 4K Hand-Held Tablet Screen Showcase (Prominent & Natural) */}
+            {/* Right Column: 4K Hand-Held Tablet with Floating Levitation & Glowing Pulse */}
             <motion.div
-              className="lg:col-span-7 flex justify-center items-center relative z-10"
-              initial={{ opacity: 0, scale: 0.95 }}
+              className="lg:col-span-7 xl:col-span-7 flex justify-center items-center relative z-10"
+              initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.15 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div 
-                className="relative w-full max-w-[880px] xl:max-w-[950px] flex flex-col items-center"
-                onMouseEnter={() => setIsCarouselPaused(true)}
-                onMouseLeave={() => setIsCarouselPaused(false)}
+              <motion.div 
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative w-full max-w-[980px] xl:max-w-[1100px] 2xl:max-w-[1220px] scale-100 sm:scale-105 lg:scale-110 origin-center flex flex-col items-center"
               >
-                {/* Ambient Glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] bg-emerald-500/15 rounded-full blur-[100px] pointer-events-none" />
+                {/* Ambient Breathing Glow */}
+                <motion.div 
+                  animate={{ scale: [1, 1.15, 1], opacity: [0.18, 0.32, 0.18] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] bg-emerald-500/20 rounded-full blur-[100px] pointer-events-none" 
+                />
 
-                {/* ══ 4K HAND-HELD TABLET CAROUSEL CONTAINER (NATURAL BORDERS, ZERO FULLSCREEN POPUP) ══ */}
-                <div className="relative w-full aspect-[1276/753] select-none group">
+                {/* ══ 4K HAND-HELD TABLET SLIDESHOW CONTAINER (SEAMLESS EDGE VIGNETTE FADE) ══ */}
+                <div 
+                  className="relative w-full aspect-[1276/753] select-none"
+                  style={{
+                    maskImage: 'radial-gradient(ellipse 90% 84% at 50% 50%, black 55%, transparent 94%)',
+                    WebkitMaskImage: 'radial-gradient(ellipse 90% 84% at 50% 50%, black 55%, transparent 94%)'
+                  }}
+                >
                   {/* Crossfading Hand-held Mockups */}
                   {tabletScreens.map((screen, idx) => (
                     <img
                       key={screen.id}
                       src={screen.image}
                       alt={screen.title}
-                      className={`absolute inset-0 w-full h-full object-contain pointer-events-none transition-opacity duration-700 ease-in-out drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)] ${
+                      className={`absolute inset-0 w-full h-full object-contain pointer-events-none transition-opacity duration-1000 ease-in-out ${
                         currentScreenIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
                       }`}
                     />
                   ))}
-
-                  {/* Left & Right Arrow Navigation Controls */}
-                  <button
-                    onClick={(e) => { e.stopPropagation(); handlePrevScreen(); }}
-                    className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100 shadow-2xl hover:scale-110"
-                    aria-label="Previous screen"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); handleNextScreen(); }}
-                    className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100 shadow-2xl hover:scale-110"
-                    aria-label="Next screen"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
                 </div>
 
-              </div>
+                {/* Subtle Slideshow Progress Dots */}
+                <div className="flex items-center gap-2 mt-2 z-20">
+                  {tabletScreens.map((screen, idx) => (
+                    <button
+                      key={screen.id}
+                      onClick={() => setCurrentScreenIndex(idx)}
+                      aria-label={`Go to ${screen.title}`}
+                      className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                        currentScreenIndex === idx 
+                          ? 'w-7 bg-[#00C9A7]' 
+                          : 'w-2 bg-white/20 hover:bg-white/40'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+              </motion.div>
             </motion.div>
 
           </div>

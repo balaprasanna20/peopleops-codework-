@@ -148,20 +148,21 @@ export default function ProductView({ onBookDemo }) {
     <div className="py-20 space-y-12 bg-[#FAF7EE] text-[#26372B] font-sans border-b border-[#EBD0AF]/70">
       
       {/* ── SECTION HEADER ── */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF8CF] border border-[#FBE6C2] text-[#2A7C13] text-xs font-bold uppercase tracking-wider shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-[#2A7C13]" />
-          <span>Core Capabilities</span>
-        </div>
-
-        <h2 className="text-3xl sm:text-5xl font-black text-[#113309] tracking-tight leading-tight">
-          Everything you need to run your workforce smoothly.
+      <motion.section 
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4"
+      >
+        <h2 className="text-3xl sm:text-5xl font-black text-[#113309] tracking-tight leading-tight uppercase">
+          CORE FEATURES.
         </h2>
 
         <p className="text-sm sm:text-base text-[#3E5044] max-w-2xl mx-auto leading-relaxed">
-          12 simple, powerful capabilities designed to give managers complete clarity without complicated tools.
+          12 powerful tools.
         </p>
-      </section>
+      </motion.section>
 
       {/* ── 12 CARDS GRID WITH MICRO-ACTION ANIMATIONS & LIVE STATUS GLOW ── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">

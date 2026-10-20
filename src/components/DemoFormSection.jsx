@@ -96,12 +96,8 @@ export default function DemoFormSection({ id = "demo-form" }) {
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFF8CF] border border-[#FBE6C2] text-[#2A7C13] text-xs font-bold uppercase tracking-wider shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#2A7C13]" />
-            <span>Fast 20-Minute Product Tour</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-[#113309] tracking-tight">
-            See PeopleOps in action with your team's stack
+          <h2 className="text-3xl sm:text-4xl font-black text-[#113309] tracking-tight uppercase">
+            SEE PEOPLEOPS IN ACTION WITH YOUR TEAM'S STACK
           </h2>
           <p className="text-sm sm:text-base text-[#3E5044] leading-relaxed">
             No aggressive sales pitches. A personalized 1-on-1 walkthrough showing how your actual tools connect into real-time operational clarity.
