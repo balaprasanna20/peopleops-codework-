@@ -4,14 +4,12 @@ import {
   Sparkles, 
   Check, 
   ArrowRight, 
-  ShieldCheck, 
-  ChevronDown
+  ShieldCheck
 } from 'lucide-react';
 import DemoFormSection from '../components/DemoFormSection';
 
 export default function PricingView({ onBookDemo }) {
   const [billingPeriod, setBillingPeriod] = useState('annual');
-  const [openFaq, setOpenFaq] = useState(null);
 
   const tiers = [
     {
@@ -61,28 +59,13 @@ export default function PricingView({ onBookDemo }) {
     },
   ];
 
-  const faqs = [
-    {
-      q: 'Do you install intrusive agents on employee laptops?',
-      a: 'Zero. PeopleOps never installs desktop scrapers or keystroke loggers. Data is collected exclusively via server-to-server cloud APIs and optical turnstile event logs.'
-    },
-    {
-      q: 'How fast is tenant deployment?',
-      a: 'Cloud connectors (Teams & GitHub) configure in 30 minutes. Turnstile biometric controllers typically sync within 3 to 5 business days.'
-    },
-    {
-      q: 'Can we customize the KPI weighting formula?',
-      a: 'Yes. Department heads set approved weightings (e.g. 40% deliverables, 30% PR turnaround, 30% attendance) matching company policy.'
-    }
-  ];
-
   const scrollToDemoForm = () => {
     const el = document.getElementById('demo-reservation');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="py-12 sm:py-14 space-y-10 sm:space-y-12 bg-[#FAF7EE] text-[#26372B] font-sans">
+    <div className="pt-12 sm:pt-14 pb-0 space-y-10 sm:space-y-12 bg-[#FAF7EE] text-[#26372B] font-sans">
       
       {/* ── 1. HEADER ── */}
       <motion.section 
@@ -200,33 +183,6 @@ export default function PricingView({ onBookDemo }) {
 
       {/* ── 4. DIRECT DEMO RESERVATION FORM ── */}
       <DemoFormSection id="demo-reservation" />
-
-      {/* ── 5. COMPACT FAQ ACCORDION ── */}
-      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-        <h3 className="text-xl font-extrabold text-[#113309] text-center">Frequently Asked Questions</h3>
-        <div className="space-y-2">
-          {faqs.map((faq, i) => {
-            const isOpen = openFaq === i;
-            return (
-              <div key={faq.q} className="rounded-xl bg-white border border-[#EBD0AF] overflow-hidden">
-                <button
-                  onClick={() => setOpenFaq(isOpen ? null : i)}
-                  className="w-full p-4 text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-[#113309]"
-                >
-                  <span>{faq.q}</span>
-                  <ChevronDown className={`w-4 h-4 text-[#2A7C13] transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {isOpen && (
-                  <div className="px-4 pb-4 text-xs text-[#3E5044] leading-relaxed border-t border-[#FAF7EE] pt-2">
-                    {faq.a}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
     </div>
   );
 }
